@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="repo.monkey" name="Code Monkeys's KODI Addons" version="1.0.0" provider-name="monkey codes">
 	<extension point="xbmc.addon.repository" name="Code Monkey's Addon Repository">
-    <info compressed="false">https://github.com/monkey-codes/kodi-monkey-repo/dist/addons.xml</info>
-    <checksum>https://github.com/monkey-codes/kodi-monkey-repo/dist/addons.xml.md5</checksum>
-    <datadir zip="true">https://github.com/monkey-codes/kodi-monkey-repo/dist/</datadir>
+    <info compressed="false">https://raw.githubusercontent.com/monkey-codes/kodi-monkey-repo/master/dist/addons.xml</info>
+    <checksum>https://raw.githubusercontent.com/monkey-codes/kodi-monkey-repo/master/dist/addons.xml.md5</checksum>
+    <datadir zip="true">https://raw.githubusercontent.com/monkey-codes/kodi-monkey-repo/master/dist/</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary>Code Monkey's Addon Repository</summary>
