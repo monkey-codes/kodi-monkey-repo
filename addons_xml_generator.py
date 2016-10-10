@@ -45,6 +45,7 @@ class Generator:
     def __init__( self ):
         # generate files
         self.dist = 'dist'
+        self.repo_addon_id = 'repo.monkey'
         self._generate_addons_file()
         self._generate_md5_file("%s/addons.xml" % self.dist)
         self._generate_addon_dir()
@@ -53,12 +54,12 @@ class Generator:
         print("Finished updating addons xml and md5 files")
 
     def _generate_repo_zip(self):
-        e = xml.etree.ElementTree.parse('addon.xml').getroot()
+        e = xml.etree.ElementTree.parse('%s/addon.xml' % self.repo_addon_id).getroot()
         dist, version, addon_id = self.dist, e.attrib['version'], e.attrib['id']
         target = "%(dist)s/%(addon_id)s-%(version)s.zip" % locals()
-        out = subprocess.check_output(["zip  %(target)s addon.xml" % locals()], shell=True)
-        print(out)
-        self._generate_md5_file(target)
+        for ext in ['zip','zip.md5']:
+            out = subprocess.check_output(["cp %(dist)s/%(addon_id)s/%(addon_id)s-%(version)s.%(ext)s %(dist)s/%(addon_id)s.%(ext)s" % locals()], shell=True)
+            print(out)
 
 
     def _generate_addons_file( self ):
@@ -107,8 +108,10 @@ class Generator:
             dist, version, addon_id = self.dist, e.attrib['version'], e.attrib['id']
             if not os.path.exists(directory):
                 os.makedirs(directory)
-            print("zip -r %(dist)s/%(addon_id)s/%(addon_id)s-%(version)s.zip %(addon)s/*" % locals())
-            out = subprocess.check_output(["/bin/bash -c 'cd %(addon)s; zip -r ../%(dist)s/%(addon_id)s/%(addon_id)s-%(version)s.zip .'" % locals()], shell=True)
+            #print("zip -r %(dist)s/%(addon_id)s/%(addon_id)s-%(version)s.zip %(addon)s/*" % locals())
+            print("zip -r %(dist)s/%(addon_id)s/%(addon_id)s-%(version)s.zip %(addon)s" % locals())
+            #out = subprocess.check_output(["/bin/bash -c 'cd %(addon)s; zip -r ../%(dist)s/%(addon_id)s/%(addon_id)s-%(version)s.zip .'" % locals()], shell=True)
+            out = subprocess.check_output(["/bin/bash -c 'zip -r %(dist)s/%(addon_id)s/%(addon_id)s-%(version)s.zip %(addon_id)s'" % locals()], shell=True)
             print(out)
             self._generate_md5_file("%(dist)s/%(addon_id)s/%(addon_id)s-%(version)s.zip" % locals())
 

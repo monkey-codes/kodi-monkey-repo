@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="repo.monkey" name="Code Monkeys's Kodi Addons" version="1.0.0" provider-name="monkey codes">
+  <requires>
+    <import addon="xbmc.addon" version="12.0.0"/>
+  </requires>
+	<extension point="xbmc.addon.repository" name="Code Monkey's Addon Repository">
+    <info compressed="false">http://localhost:8000/addons.xml</info>
+    <checksum>http://localhost:8000/addons.xml.md5</checksum>
+    <datadir zip="true">http://localhost:8000/</datadir>
+    <!--<info compressed="false">https://raw.githubusercontent.com/monkey-codes/kodi-monkey-repo/master/dist/addons.xml</info>
+    <checksum>https://raw.githubusercontent.com/monkey-codes/kodi-monkey-repo/master/dist/addons.xml.md5</checksum>
+    <datadir zip="true">https://raw.githubusercontent.com/monkey-codes/kodi-monkey-repo/master/dist/</datadir> -->
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Code Monkey's Addon Repository</summary>
+		<description>Home of the OpenVPN Script</description>
+		<disclaimer></disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
+
