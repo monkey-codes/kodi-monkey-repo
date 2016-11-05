@@ -111,7 +111,7 @@ class Generator:
             #print("zip -r %(dist)s/%(addon_id)s/%(addon_id)s-%(version)s.zip %(addon)s/*" % locals())
             print("zip -r %(dist)s/%(addon_id)s/%(addon_id)s-%(version)s.zip %(addon)s" % locals())
             #out = subprocess.check_output(["/bin/bash -c 'cd %(addon)s; zip -r ../%(dist)s/%(addon_id)s/%(addon_id)s-%(version)s.zip .'" % locals()], shell=True)
-            out = subprocess.check_output(["/bin/bash -c 'zip -r %(dist)s/%(addon_id)s/%(addon_id)s-%(version)s.zip %(addon_id)s'" % locals()], shell=True)
+            out = subprocess.check_output(["/bin/bash -c 'zip -r %(dist)s/%(addon_id)s/%(addon_id)s-%(version)s.zip %(addon_id)s; cp %(addon_id)s/{icon.png,fanart.jpg} %(dist)s/%(addon_id)s/'" % locals()], shell=True)
             print(out)
             self._generate_md5_file("%(dist)s/%(addon_id)s/%(addon_id)s-%(version)s.zip" % locals())
 

@@ -3,7 +3,7 @@
   <requires>
     <import addon="xbmc.addon" version="12.0.0"/>
   </requires>
-	<extension point="xbmc.addon.repository" name="Code Monkey's Addon Repository">
+	<extension point="xbmc.addon.repository" name="Code Monkey Addon Repository">
     <!-- <info compressed="false">http://localhost:8000/addons.xml</info>
     <checksum>http://localhost:8000/addons.xml.md5</checksum>
     <datadir zip="true">http://localhost:8000/</datadir> -->
@@ -18,4 +18,3 @@
 		<platform>all</platform>
 	</extension>
 </addon>
-

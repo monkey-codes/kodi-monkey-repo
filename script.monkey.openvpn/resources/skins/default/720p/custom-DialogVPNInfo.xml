@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="1149" type="dialog">
+  <defaultcontrol always="true">9000</defaultcontrol>
+	<coordinates>
+		<left>185</left>
+		<top>40</top>
+	</coordinates>
+	<include>dialogeffect</include>
+	<controls>
+    <control type="group">
+      <include>VisibleFadeEffect</include>
+      <visible>!Window.isVisible(AddonSettings) + !Window.IsActive(TextViewer)</visible>
+      <include name="DialogBackgroundCommons">
+        <param name="DialogBackgroundWidth" value="920" />
+        <param name="DialogBackgroundHeight" value="639" />
+        <param name="DialogHeaderWidth" value="840" />
+        <param name="DialogHeaderLabel" value="Current VPN Status" />
+        <param name="DialogHeaderId" value="2" />
+        <param name="CloseButtonLeft" value="830" />
+        <param name="CloseButtonNav" value="3" />
+      </include>
+      <control type="image">
+        <left>30</left>
+        <top>70</top>
+        <width>220</width>
+        <height>220</height>
+        <aspectratio>keep</aspectratio>
+        <texture background="true">$INFO[Window(10001).Property(VPN.Flag)]</texture>
+        <bordertexture border="8">ThumbShadow.png</bordertexture>
+        <bordersize>8</bordersize>
+      </control>
+      <control type="group">
+        <left>270</left>
+        <top>130</top>
+        <control type="label">
+          <description>Exit node txt</description>
+          <left>10</left>
+          <top>0</top>
+          <width>140</width>
+          <height>25</height>
+          <label>Exit Node:</label>
+          <align>right</align>
+          <aligny>center</aligny>
+          <font>font13</font>
+          <textcolor>blue</textcolor>
+        </control>
+        <control type="label">
+          <description>exit node Value</description>
+          <left>160</left>
+          <top>0</top>
+          <width>440</width>
+          <height>25</height>
+          <label fallback="416">$INFO[Window(10001).Property(VPN.ExitNode)]</label>
+          <align>left</align>
+          <aligny>center</aligny>
+          <font>font13</font>
+          <scroll>true</scroll>
+        </control>
+        <control type="label">
+          <description>Active Config txt</description>
+          <left>10</left>
+          <top>30</top>
+          <width>140</width>
+          <height>25</height>
+          <label>Active Config:</label>
+          <align>right</align>
+          <aligny>center</aligny>
+          <font>font13</font>
+          <textcolor>blue</textcolor>
+        </control>
+        <control type="label">
+          <description>Active config Value</description>
+          <left>160</left>
+          <top>30</top>
+          <width>440</width>
+          <height>25</height>
+          <label fallback="416">$INFO[Window(10001).Property(VPN.ActiveConfig)]</label>
+          <align>left</align>
+          <aligny>center</aligny>
+          <font>font13</font>
+          <scroll>true</scroll>
+        </control>
+        <control type="label">
+          <description>Status txt</description>
+          <left>10</left>
+          <top>60</top>
+          <width>140</width>
+          <height>25</height>
+          <label>Status:</label>
+          <align>right</align>
+          <aligny>center</aligny>
+          <font>font13</font>
+          <textcolor>blue</textcolor>
+        </control>
+        <control type="label">
+          <description>Status Value</description>
+          <left>160</left>
+          <top>60</top>
+          <width>440</width>
+          <height>25</height>
+          <label fallback="416">$INFO[Window(10001).Property(VPN.Status)]</label>
+          <align>left</align>
+          <aligny>center</aligny>
+          <font>font13</font>
+          <scroll>true</scroll>
+        </control>
+      </control> <!-- end group -->
+       <control type="group">
+        <left>30</left>
+        <top>90</top>
+         <control type="image">
+           <left>0</left>
+           <top>160</top>
+           <width>860</width>
+           <height>4</height>
+           <texture>separator.png</texture>
+         </control>
+          <control type="image">
+            <left>0</left>
+            <top>190</top>
+            <width>860</width>
+            <height>325</height>
+            <texture>$INFO[Window(10001).Property(VPN.Map)]</texture>
+          </control>
+        </control>
+
+    </control>
+	</controls>
+</window>
