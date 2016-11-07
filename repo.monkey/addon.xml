@@ -12,7 +12,7 @@
     <datadir zip="true">https://raw.githubusercontent.com/monkey-codes/kodi-monkey-repo/master/dist/</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary>Code Monkey's Addon Repository</summary>
+		<summary>Code Monkey Addon Repository</summary>
 		<description>Home of the OpenVPN Script</description>
 		<disclaimer></disclaimer>
 		<platform>all</platform>

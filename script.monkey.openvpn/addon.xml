@@ -10,7 +10,7 @@
 	<extension point="xbmc.addon.metadata">
 		<platform>all</platform>
 		<summary lang="en">Control OpenVPN Connections through systemd</summary>
-		<description lang="en">Control OpenVPN Connections from inside Kodi interface. The script relies on openvpn systemd service being installed</description>
+		<description lang="en">Control OpenVPN Connections from inside Kodi interface. The script relies on OpenVPN systemd service being installed</description>
 		<license>GNU General Public License, v2</license>
 		<language></language>
     <source>https://github.com/monkey-codes/kodi-monkey-repo/tree/master/script.monkey.openvpn</source>
