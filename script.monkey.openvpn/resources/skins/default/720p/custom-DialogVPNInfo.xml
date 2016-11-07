@@ -22,8 +22,8 @@
       <control type="image">
         <left>30</left>
         <top>70</top>
-        <width>220</width>
-        <height>220</height>
+        <width>225</width>
+        <height>137</height>
         <aspectratio>keep</aspectratio>
         <texture background="true">$INFO[Window(10001).Property(VPN.Flag)]</texture>
         <bordertexture border="8">ThumbShadow.png</bordertexture>
@@ -120,6 +120,7 @@
             <top>190</top>
             <width>860</width>
             <height>325</height>
+            <aspectratio>keep</aspectratio>
             <texture>$INFO[Window(10001).Property(VPN.Map)]</texture>
           </control>
         </control>
