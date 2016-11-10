@@ -120,7 +120,7 @@
             <top>190</top>
             <width>860</width>
             <height>325</height>
-            <aspectratio>keep</aspectratio>
+            <aspectratio>scale</aspectratio>
             <texture>$INFO[Window(10001).Property(VPN.Map)]</texture>
           </control>
         </control>
