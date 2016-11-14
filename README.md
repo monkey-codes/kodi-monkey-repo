@@ -45,3 +45,5 @@ $ sudo su - kodi -s /bin/bash
 $ cd ~ 
 $ wget http://raw.githubusercontent.com/monkey-codes/kodi-monkey-repo/master/dist/repo.monkey.zip
 ```
+![screen_shot_1](https://res.cloudinary.com/monkey-codes/image/upload/v1479104322/kodi_vpn_screenshot_2_npq4yp.jpg)
+![screen_shot_2](https://res.cloudinary.com/monkey-codes/image/upload/v1479098105/kodi_vpn_screenshot_rysuac.jpg)
