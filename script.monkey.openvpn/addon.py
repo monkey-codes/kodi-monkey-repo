@@ -4,13 +4,13 @@ import xbmcaddon
 import xbmcgui
 import xbmc
 import urllib2
-from BeautifulSoup import BeautifulSoup
+import json
 from functools import partial
 
 _addonid = 'kodi-openvpn-script'
 addon       = xbmcaddon.Addon()
 addonname   = addon.getAddonInfo('name')
-openvpn_conf_path = '/etc/openvpn'
+openvpn_conf_path = '/etc/openvpn/client'
 
 def log_debug(msg):
     xbmc.log( 'script.openvpn: DEBUG: %s' % msg)
@@ -20,30 +20,19 @@ def os_call(call):
 
 def get_geo():
     try:
-        url = 'http://api.ipinfodb.com/v3/ip-city/?key=24e822dc48a930d92b04413d1d551ae86e09943a829f971c1c83b7727a16947f&format=xml'
+        url = 'http://ipinfo.io/'
         req = urllib2.Request(url)
+        req.add_header('Accept', '*/*')
+        req.add_header('User-Agent', 'curl/7.57.0')
         f = urllib2.urlopen(req, timeout=5)
-        result = f.read()
+        result = json.loads(f.read())
         f.close()
-        result =  BeautifulSoup(result)
-        return result.response
+        latlng = result['loc'].split(',')
+        result['latitude'] = latlng[0]
+        result['longitude'] = latlng[1]
+        return result
     except:
-        return BeautifulSoup("""
-        <?xml version="1.0" encoding="UTF-8"?>
-        <Response>
-            <statusCode>OK</statusCode>
-            <statusMessage></statusMessage>
-            <ipAddress>64.245.52.2</ipAddress>
-            <countryCode>US</countryCode>
-            <countryName>Unkown</countryName>
-            <regionName>Unkown</regionName>
-            <cityName>Unkown</cityName>
-            <zipCode>78753</zipCode>
-            <latitude>30.3731</latitude>
-            <longitude>-97.6756</longitude>
-            <timeZone>-05:00</timeZone>
-        </Response>
-        """).response
+        return {'latitude' : '30.3731', 'longitude': '-97.6756', 'city':'Unknown', 'country': 'Unknown'}
 
 def select(heading, options, default=lambda: select_main):
     labels = [option['label'] for option in options]
@@ -58,7 +47,7 @@ def select(heading, options, default=lambda: select_main):
 
 def select_vpn():
     ovpnfiles = []
-    ovpnfiles.append({'label': "Disconnect from %s" % get_geo().cityname.string, 'func':cmd_systemctl_vpn_factory("stop"), 'complete': select_noop})
+    ovpnfiles.append({'label': "Disconnect from %s" % get_geo()['city'], 'func':cmd_systemctl_vpn_factory("stop"), 'complete': select_noop})
     for path in os.listdir(openvpn_conf_path):
         if os.path.splitext(path)[1] == '.ovpn':
             log_debug('Found configuration: [%s]' % path)
@@ -75,7 +64,7 @@ def cmd_busy(command):
 
 def cmd_systemctl_factory(service, action): return lambda option: subprocess.check_call(["sudo","systemctl", action, service])
 
-cmd_systemctl_vpn_factory = partial(cmd_systemctl_factory, "openvpn@client")
+cmd_systemctl_vpn_factory = partial(cmd_systemctl_factory, "openvpn-client@client")
 
 def cmd_disconnet_vpn(option): cmd_systemctl_vpn_factory("stop")(option)
 def cmd_connect_vpn(option): cmd_systemctl_vpn_factory("start")(option)
@@ -101,16 +90,16 @@ def cmd_display_current_location(*args):
     map_style = 'format=png&maptype=roadmap&style=element:geometry%7Ccolor:0x212121&style=element:labels.icon%7Cvisibility:off&style=element:labels.text.fill%7Ccolor:0x757575&style=element:labels.text.stroke%7Ccolor:0x212121&style=feature:administrative%7Celement:geometry%7Ccolor:0x757575&style=feature:administrative.country%7Celement:labels.text.fill%7Ccolor:0x9e9e9e&style=feature:administrative.land_parcel%7Cvisibility:off&style=feature:administrative.locality%7Celement:labels.text.fill%7Ccolor:0xbdbdbd&style=feature:poi%7Celement:labels.text.fill%7Ccolor:0x757575&style=feature:poi.park%7Celement:geometry%7Ccolor:0x181818&style=feature:poi.park%7Celement:labels.text.fill%7Ccolor:0x616161&style=feature:poi.park%7Celement:labels.text.stroke%7Ccolor:0x1b1b1b&style=feature:road%7Celement:geometry.fill%7Ccolor:0x2c2c2c&style=feature:road%7Celement:labels.text.fill%7Ccolor:0x8a8a8a&style=feature:road.arterial%7Celement:geometry%7Ccolor:0x373737&style=feature:road.highway%7Celement:geometry%7Ccolor:0x3c3c3c&style=feature:road.highway.controlled_access%7Celement:geometry%7Ccolor:0x4e4e4e&style=feature:road.local%7Celement:labels.text.fill%7Ccolor:0x616161&style=feature:transit%7Celement:labels.text.fill%7Ccolor:0x757575&style=feature:water%7Celement:geometry%7Ccolor:0x0d0d0d&style=feature:water%7Celement:labels.text.fill%7Ccolor:0x0d0d0d'
     map_url = 'https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyDXdwZa6dduC_knaIzovbmim0JrI4CGvUE&markers=latitude,longitude&center=latitude,longitude&zoom=1&%s&size=860x325&scale=2' % map_style
     geo = get_geo()
-    latitude,longitude = geo.latitude.string,geo.longitude.string
-    systemctl = os_call("systemctl status openvpn@client | grep \"Active\"")
-    active_config = os_call("readlink -f /etc/openvpn/client.conf")
+    latitude,longitude = geo['latitude'],geo['longitude']
+    systemctl = os_call("systemctl status openvpn-client@client | grep \"Active\"")
+    active_config = os_call("readlink -f /etc/openvpn/client/client.conf")
     window = xbmcgui.WindowXMLDialog('custom-DialogVPNInfo.xml',xbmcaddon.Addon().getAddonInfo('path').decode('utf-8'), 'default', '1080p')
     win =xbmcgui.Window(10001)
-    win.setProperty( 'VPN.ExitNode' ,  '%s, %s' % (geo.cityname.string, geo.countryname.string))
-    win.setProperty( 'VPN.Flag' ,  'http://flagpedia.net/data/flags/normal/%s.png' % geo.countrycode.string.lower())
+    win.setProperty( 'VPN.ExitNode' ,  '%s, %s' % (geo['city'], geo['country']))
+    win.setProperty( 'VPN.Flag' ,  'http://flagpedia.net/data/flags/normal/%s.png' % geo['country'].lower())
     win.setProperty( 'VPN.ActiveConfig' , active_config.split('/')[-1][:-6])
     win.setProperty( 'VPN.Status' , systemctl.strip())
-    win.setProperty( 'VPN.Map' , map_url.replace('latitude', geo.latitude.string).replace('longitude',geo.longitude.string))
+    win.setProperty( 'VPN.Map' , map_url.replace('latitude', latitude).replace('longitude', longitude))
     log_debug(dir(window))
     window.doModal()
     log_debug(xbmcgui.getCurrentWindowId())
@@ -124,6 +113,7 @@ def select_noop():
     pass
 
 def select_main():
+    log_debug('detecting changes!!!')
     menu = [
             {'label': 'Display IP location', 'func': cmd_busy(cmd_display_current_location), 'complete': select_main},
             {'label': 'Select VPN', 'func': cmd_busy(cmd_select_vpn), 'complete': select_main}
