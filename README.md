@@ -1,7 +1,7 @@
 ## kodi-monkey-repo
 
 A Kodi repository that contains an OpenVPN script addon. The addon has been tested on a 
-[Raspberry Pi running Arch Linux](http://blog.monkey.codes/how-to-setup-kodi-on-a-raspberry-pi/#managevpnthroughkodi)
+[Raspberry Pi running Arch Linux](https://johanzietsman.com/how-to-setup-kodi-on-a-raspberry-pi/#managevpnthroughkodi)
 
 ## Requirements
 *  Only works on Linux and has been tested on Arch Linux.
